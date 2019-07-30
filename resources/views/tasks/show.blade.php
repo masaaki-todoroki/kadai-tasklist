@@ -7,6 +7,10 @@
             <th>{{ $task -> id }}</th>
         </tr>
         <tr>
+            <td>ステータス</td>
+            <th>{{ $task -> status }}</th>
+        </tr>
+        <tr>
             <td>タスク</td>
             <th>{{ $task -> content }}</th>
         </tr>
