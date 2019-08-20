@@ -83,11 +83,18 @@ class TasksController extends Controller
     //getでtasks/idでアクセスされた場合の「取得表示処理」
     public function show($id)
     {
-        $task = Task::find($id);
-        
-        return view('tasks.show', [
-            'task' => $task
-        ]);
+        // $task = Task::find($id);
+        // return view('tasks.show', [
+        //     'task' => $task
+        // ]);
+        $task = \App\Task::find($id);
+        if (\Auth::id() === $task -> user_id) {
+            return view('tasks.show', [
+                'task' => $task
+            ]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -99,11 +106,18 @@ class TasksController extends Controller
     //getでtasks/id/editにアクセスされた場合の「更新画面表示処理」
     public function edit($id)
     {
-        $task = Task::find($id);
-
-        return view('tasks.edit', [
-            'task' => $task,
-        ]);
+        // $task = Task::find($id);
+        // return view('tasks.edit', [
+        //     'task' => $task,
+        // ]);
+        $task = \App\Task::find($id);
+        if(\Auth::id() === $task -> user_id) {
+            return view('tasks.edit', [
+                'task' => $task
+            ]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -140,9 +154,10 @@ class TasksController extends Controller
     {
         // $task = Task::find($id);
         $task = \App\Task::find($id);
-        if (\Auth::id() === $task->user_id) {
+        if (\Auth::id() === $task -> user_id) {
             $task -> delete();
+        } else {
+            return redirect('/');
         }
-        return redirect('/');
     }
 }
